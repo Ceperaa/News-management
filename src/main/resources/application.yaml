@@ -1,0 +1,57 @@
+server:
+  port: 8080
+
+  servlet:
+    context-path: /api/
+
+spring:
+
+  application:
+    name: news
+
+  datasource:
+    url: jdbc:postgresql://localhost:5437/newsManagement
+    driver_class_name: org.postgresql.Driver
+    username: postgres
+    password: root
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: false
+        format_sql: true
+
+  profiles:
+    active: prod
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  cloud:
+    config:
+      enabled: false
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+
+
+
+logging:
+  level:
+    root: debug
+    ru.clevertec.newsManagement: debug
+    ru.clevertec.newsManagement.cache.CacheData: info
+    org.springframework.boot.redis: debug
+    org.springframework.boot.security: debug
+    redis.clients: debug
+
+app:
+  cache:
+    algorithm: Redis
+    max_size: 3
+
