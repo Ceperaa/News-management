@@ -19,7 +19,6 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import ru.clevertec.newsManagement.cache.aop.CacheAspect;
 
 @Configuration
-@EnableCaching
 public class CacheConfig {
 
     @Value("${app.cache.max_size}")
