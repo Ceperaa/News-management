@@ -1,13 +1,13 @@
-package ru.clevertec.newsManagement;
+package com.example.eurekaclient;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NewsManagementApplication {
+public class UserSecurityApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NewsManagementApplication.class, args);
+		SpringApplication.run(UserSecurityApplication.class, args);
 	}
 
 }

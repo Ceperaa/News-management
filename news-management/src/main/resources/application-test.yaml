@@ -1,0 +1,7 @@
+spring:
+  liquibase:
+    change-log: classpath:db/changelog/master-test.yaml
+
+logging:
+  level:
+    root: debug
