@@ -1,9 +1,6 @@
-# News management
+# Getting
 
-### Reference Documentation
-following sections:
+### Reference 
+For t:
 
-* [get](http://localhost:8080/api/v1/news)
-
-
-
+* [get](https://docs.gradle.org)

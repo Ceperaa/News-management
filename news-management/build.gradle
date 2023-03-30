@@ -1,0 +1,76 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.0.4'
+    id 'io.spring.dependency-management' version '1.1.0'
+}
+
+group = 'ru.clevertec'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates' }
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
+}
+
+ext {
+    set('springCloudVersion', "2022.0.1")
+}
+
+ext.versions = [
+        'mapStruct'     : '1.5.3.Final',
+        'assertj'       : '3.24.2',
+        'webmvcUi'      : '2.0.4',
+        'openapiUi'     : '1.6.15',
+        'jjwt'          : '0.9.1',
+        'jedis'         : '4.3.1',
+        'testcontainers': '1.17.6',
+        'wiremock'      : '2.35.0'
+]
+
+dependencies {
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    annotationProcessor "org.mapstruct:mapstruct-processor:${versions.mapStruct}"
+    implementation "org.mapstruct:mapstruct:${versions.mapStruct}"
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    implementation 'org.liquibase:liquibase-core'
+    runtimeOnly 'org.postgresql:postgresql'
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${versions.webmvcUi}"
+    implementation "org.springdoc:springdoc-openapi-ui:${versions.openapiUi}"
+    implementation "io.jsonwebtoken:jjwt:${versions.jjwt}"
+    implementation "redis.clients:jedis:${versions.jedis}"
+    testImplementation "org.testcontainers:postgresql:${versions.testcontainers}"
+    testImplementation "org.testcontainers:junit-jupiter:${versions.testcontainers}"
+    testImplementation "com.github.tomakehurst:wiremock-jre8-standalone:${versions.wiremock}"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+

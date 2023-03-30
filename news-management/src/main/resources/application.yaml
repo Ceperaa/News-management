@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+  servlet:
+    context-path: /api/
+
+spring:
+  application:
+    name: news
+
+  datasource:
+    url: jdbc:postgresql://localhost:5437/newsManagement
+    driver_class_name: org.postgresql.Driver
+    username: postgres
+    password: root
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        show_sql: false
+        format_sql: true
+
+  profiles:
+    active: prod
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+
+  cloud:
+    config:
+      enabled: false
+
+app:
+  cache:
+    algorithm: redis
+    max_size: 3
+
+jwt:
+  secret: secret
+  expired: 13600000
