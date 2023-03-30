@@ -26,7 +26,7 @@ spring:
 
   data:
     redis:
-      host: localhost
+      host: redis
       port: 6379
 
   cloud:
@@ -35,7 +35,7 @@ spring:
 
 app:
   cache:
-    algorithm: redis
+    algorithm: LRU
     max_size: 3
 
 jwt:

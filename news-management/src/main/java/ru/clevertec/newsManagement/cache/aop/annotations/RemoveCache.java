@@ -18,7 +18,7 @@ public @interface RemoveCache {
     String sourceFieldEntity() default "";
 
     /**
-     * @return имя поля в главной сущности куда сохранить зависимость
+     * @return имя поля в главной сущности откуда удалить зависимость
      */
     String targetFieldEntity() default "";
 
@@ -26,6 +26,7 @@ public @interface RemoveCache {
      * @return тип главной сущности
      */
     Class<?> typeEntity() default Object.class;
+
 
     String nameKey();
 }

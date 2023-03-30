@@ -41,5 +41,6 @@ class NewsRepositoryTest extends TestRepository {
                 .findAll(CustomerSpecifications.byMultipleParams(Map.of("text", "text")),
                         PageRequest.of(0, 20)).toList();
         assertThat(newsList.get(0).getText()).isEqualTo("text");
+        assertThat(newsList).hasSize(1);
     }
 }

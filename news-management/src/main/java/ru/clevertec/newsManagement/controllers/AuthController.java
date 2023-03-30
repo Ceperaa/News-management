@@ -24,7 +24,7 @@ public class AuthController {
     private final AuthService auth;
     private final UserService userService;
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<UserTokenDto> singIn(UserAuthDto authUserDto) {
         return ResponseEntity.ok(auth.singIn(authUserDto));
     }

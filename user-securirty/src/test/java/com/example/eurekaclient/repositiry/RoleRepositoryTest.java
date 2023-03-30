@@ -1,23 +1,24 @@
-package ru.clevertec.newsManagement.repository;
+package com.example.eurekaclient.repositiry;
 
+import com.example.eurekaclient.model.Role;
+import com.example.eurekaclient.model.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
-import ru.clevertec.newsManagement.model.Comment;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
-class CommentRepositoryTest extends TestRepository {
+class RoleRepositoryTest extends TestRepository {
 
     @Autowired
-    private CommentRepository repository;
+    private RoleRepository roleRepository;
 
     @Container
     protected static final PostgreSQLContainer<?> CONTAINER = new PostgreSQLContainer<>("postgres:14.7");
@@ -30,17 +31,8 @@ class CommentRepositoryTest extends TestRepository {
     }
 
     @Test
-    void findById(){
-        final Comment comment = repository.findById(1L).orElseGet(Comment::new);
-        assertThat(comment.getText()).isEqualTo("text");
-    }
-
-    @Test
-    void findAll() {
-        final List<Comment> comments = repository
-                .findAll(CustomerSpecifications.byMultipleParams(Map.of("text", "2text")),
-                        PageRequest.of(0, 20)).toList();
-        assertThat(comments.get(0).getText()).isEqualTo("2text");
-        assertThat(comments).hasSize(1);
+    void findByRole() {
+        Optional<Role> roleAdmin = roleRepository.findByRole("ROLE_ADMIN");
+        assertThat(roleAdmin.get().getRole()).isEqualTo("ROLE_ADMIN");
     }
 }

@@ -65,7 +65,6 @@ public class EntitySupplier {
 
     public static CommentUpdateDto getCommentUpdateDto() {
         return CommentUpdateDto.builder()
-                .id(1L)
                 .text("text")
                 .build();
     }

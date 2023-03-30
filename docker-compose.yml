@@ -7,9 +7,10 @@ networks:
 services:
   ##1
   springbootApp80:
+    container_name: news_management
     image: news_management
     build:
-      context: news-management
+      context: ./news-management
       dockerfile: Dockerfile
     environment:
       PORT: 8080
@@ -46,9 +47,10 @@ services:
 
   ##2
   springbootApp82:
+    container_name: user_security
     image: user_security
     build:
-      context: user-securirty
+      context: ./user-securirty
       dockerfile: Dockerfile
     environment:
       PORT: 8002
