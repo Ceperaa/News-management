@@ -3,15 +3,29 @@
 RESTful web-service, реализующий функционал для работы с
 системой управления новостями
 ## запуск
-- docker compose up
+- docker network create app-network && docker compose up
 ## Application
 Адреса доступны только аутентифицированым пользователям
+
+ - Аутентификация
+  ```sh
+   POST /api/auth/login
+   ```
  - Регистрация возможна:
    - подписчик
+    ```sh
+       POST /api/auth/registration/journalist
+    ```
    - журналист
+   ```sh
+    POST /api/auth/registration/subscriber
+    ```
    - админ
+   ```sh
+   POST /api/auth/registration/admin
+    ```
  - Авторизация с помощью jwt-токена:
-
+ 
 Доступные адреса:
 
   - работа с новостями
@@ -24,13 +38,13 @@ RESTful web-service, реализующий функционал для рабо
      username
  - Создавние новости возможно только журналисту
 ```sh
-POST /api/api/v1/news
+POST /api/v1/news
 ```
 - Поиск по id
 ```sh
 GET /api/v1/news/{id}
 ```
-- Список в учетом пагинации
+- Список с учетом пагинации
 ```sh
 GET /api/v1/news?limit={pageSize}&offset={page}
 ```
@@ -44,7 +58,7 @@ DELETE /api/v1/news/{id}
 ```
  - Полнотекстовый поиск по различным параметрам
 ```sh
-GET /api/api/v1/news/search?size=3&page=0&nameFeild=param
+GET /api/v1/news/search?size=3&page=0&nameFeild=param
 ```
   - Работа с коментариями
   >Comment:
@@ -52,13 +66,13 @@ GET /api/api/v1/news/search?size=3&page=0&nameFeild=param
       time, text, username, news_id
  - Создание коментария возможно только подписчику
  ```sh
-POST /api/v1/tags
+POST /api/v1/comments
 ```
 - Поиск по id 
 ```sh
 GET /api/v1/comments/{id}
 ```
-- Список в учетом пагинации
+- Список с учетом пагинации
 ```sh
 GET /api/v1/comments?limit={pageSize}&offset={page}
 ```

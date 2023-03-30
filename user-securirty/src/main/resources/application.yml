@@ -6,7 +6,7 @@ spring:
     name: security
 
   datasource:
-    url: jdbc:postgresql://localhost:5435/user-security
+    url: jdbc:postgresql://localhost:5437/user-security
     driver_class_name: org.postgresql.Driver
     username: postgres
     password: root
@@ -21,3 +21,6 @@ spring:
   cloud:
     config:
       enabled: false
+
+  liquibase:
+    change-log: classpath:db/changelog/changelog-master.yaml

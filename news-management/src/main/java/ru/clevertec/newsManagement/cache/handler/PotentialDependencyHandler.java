@@ -24,7 +24,7 @@ public class PotentialDependencyHandler {
     private final CacheData cacheData;
 
     /**
-     * build DataObject  для дальнейшего удаления зависимости
+     * build DataObject  для дальнейшего добавления зависимости
      *
      * @param joinPoint       данные о точке соединения
      * @param dependentEntity зависимой сущности
@@ -69,8 +69,8 @@ public class PotentialDependencyHandler {
      * @param dataObject данные точки соединения
      */
     private void observer(DataObject dataObject) {
-        Map FieldMap = objectMapper.convertValue(dataObject.getDependentEntity(), Map.class);
-        if (dataObject.dependentEntity != null & FieldMap.containsKey(dataObject.getFieldName())) {
+        if (dataObject.dependentEntity != null & !dataObject.getFieldName().equals("")) {
+            Map FieldMap = objectMapper.convertValue(dataObject.getDependentEntity(), Map.class);
             String keyTargetEntity = getKey(String.valueOf(FieldMap.get(dataObject.getFieldName())),
                     dataObject.getTypeEntity().getSimpleName());
             Object targetEntity = Optional.ofNullable(keyTargetEntity)

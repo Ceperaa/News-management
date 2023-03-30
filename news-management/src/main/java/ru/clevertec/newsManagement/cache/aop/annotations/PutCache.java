@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
 public @interface PutCache {
 
     /**
-     * @return имя поля внешнего ключа главной сущности
+     * @return имя поля внешнего ключа сущности
      */
     String sourceFieldEntity() default "";
 

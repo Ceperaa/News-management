@@ -41,5 +41,6 @@ class CommentRepositoryTest extends TestRepository {
                 .findAll(CustomerSpecifications.byMultipleParams(Map.of("text", "2text")),
                         PageRequest.of(0, 20)).toList();
         assertThat(comments.get(0).getText()).isEqualTo("2text");
+        assertThat(comments).hasSize(1);
     }
 }

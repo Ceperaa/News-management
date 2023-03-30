@@ -22,19 +22,34 @@ public class CacheAspect {
     private PotentialDependencyHandler handler;
 
     @PostConstruct()
-    public void into(){
-       handler = new PotentialDependencyHandler(cacheData);
+    public void into() {
+        handler = new PotentialDependencyHandler(cacheData);
     }
 
+    /**
+     * добавляет или обновляем элемент после того как он сохранился в бд,
+     * в том числе обновляется в списке главного элемента
+     *
+     * @param joinPoint данные о точке соединения
+     * @param entityDto сущность для добавления
+     * @throws NoSuchFieldException
+     * @throws IllegalAccessException
+     */
     @AfterReturning(value = "PointcatsCache.isPutCacheLayer())",
             returning = "entityDto")
     public void putCache(JoinPoint joinPoint, Object entityDto) throws NoSuchFieldException, IllegalAccessException {
         final String fieldId = getFieldId(entityDto);
         String key1 = getKey(fieldId, entityDto.getClass().getSimpleName());
         cacheData.put(key1, entityDto);
-        handler.observerAdd(joinPoint,entityDto);
+        handler.observerAdd(joinPoint, entityDto);
     }
 
+    /**
+     * удаляет элемент после того как он удалился в бд
+     * в том числе удаляет из списка главного объекта
+     *
+     * @param joinPoint данные о точке соединения
+     */
     @After(value = "PointcatsCache.isRemoveCacheLayer()")
     public void removeCache(JoinPoint joinPoint) {
         Object arg = joinPoint.getArgs()[0];
@@ -42,8 +57,17 @@ public class CacheAspect {
         cacheData.delete(String.valueOf(arg));
     }
 
-    @Around(value = "PointcatsCache.isGetCacheLayer() && args(id)&&target(service)")
-    public Object getCache(ProceedingJoinPoint pjp, Object id, Object service) throws Throwable {
+    /**
+     * запрашивает объект из кэша, если его нет,
+     * то добавляет в кэш после запроса в бд
+     *
+     * @param pjp данные о точке соединения
+     * @param id запрашиваемой сущности
+     * @return
+     * @throws Throwable
+     */
+    @Around(value = "PointcatsCache.isGetCacheLayer() && args(id)")
+    public Object getCache(ProceedingJoinPoint pjp, Object id) throws Throwable {
         String res = getKey(String.valueOf(id), returningTypeName(pjp));
         Object entityDto = cacheData.get(res);
         if (entityDto == null) {
