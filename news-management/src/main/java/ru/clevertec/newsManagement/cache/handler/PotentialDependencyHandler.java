@@ -9,6 +9,7 @@ import ru.clevertec.newsManagement.cache.aop.annotations.PutCache;
 import ru.clevertec.newsManagement.cache.aop.annotations.RemoveCache;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -41,7 +42,6 @@ public class PotentialDependencyHandler {
                 .build());
     }
 
-
     /**
      * build DataObject  для дальнейшего удаления зависимости
      *
@@ -69,17 +69,20 @@ public class PotentialDependencyHandler {
      * @param dataObject данные точки соединения
      */
     private void observer(DataObject dataObject) {
-        if (dataObject.dependentEntity != null & !dataObject.getFieldName().equals("")) {
-            Map FieldMap = objectMapper.convertValue(dataObject.getDependentEntity(), Map.class);
-            String keyTargetEntity = getKey(String.valueOf(FieldMap.get(dataObject.getFieldName())),
+        if (!dataObject.getFieldName().equals("")) {
+            Map fieldMap = objectMapper.convertValue(dataObject.getDependentEntity(), Map.class);
+            String keyTargetEntity = getKey(String.valueOf(fieldMap.get(dataObject.getFieldName())),
                     dataObject.getTypeEntity().getSimpleName());
-            Object targetEntity = Optional.ofNullable(keyTargetEntity)
-                    .map((keyTargetEntity1) -> cacheData.get(keyTargetEntity1))
-                    .map((targetEntityBefore) -> objectMapper.convertValue(targetEntityBefore, Map.class))
-                    .map((targetEntityMap) -> operationDependentEntity(targetEntityMap, dataObject))
-                    .orElseThrow(() -> new RuntimeException("Не удалось обработать объект: " + dataObject.getTypeEntityName()));
+            Object mainEntity = cacheData.get(keyTargetEntity);
 
-            cacheData.put(keyTargetEntity, targetEntity);
+            if (mainEntity != null && dataObject.dependentEntity != null) {
+                Object targetEntity = Optional.ofNullable(mainEntity)
+                        .map((targetEntityBefore) -> objectMapper.convertValue(targetEntityBefore, Map.class))
+                        .map((targetEntityMap) -> operationDependentEntity(targetEntityMap, dataObject))
+                        .orElseThrow(() -> new RuntimeException("Не удалось обработать объект: " + dataObject.getTypeEntityName()));
+
+                cacheData.put(keyTargetEntity, targetEntity);
+            }
         }
     }
 
@@ -92,6 +95,9 @@ public class PotentialDependencyHandler {
      */
     private Object operationDependentEntity(Map<String, Object> targetEntityMap, DataObject dataObject) {
         List<Object> fieldList = (List<Object>) targetEntityMap.get(dataObject.getTargetFieldEntity());
+        if (fieldList == null) {
+            fieldList = new ArrayList<>();
+        }
         switch (dataObject.getOperation()) {
             case ADD:
                 fieldList.add(dataObject.getDependentEntity());
@@ -140,7 +146,6 @@ public class PotentialDependencyHandler {
     private String getKey(String id, String elementName) {
         return String.format("%s_%s", id, elementName);
     }
-
 
     @Data
     @AllArgsConstructor
