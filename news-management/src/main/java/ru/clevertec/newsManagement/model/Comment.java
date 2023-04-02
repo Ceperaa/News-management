@@ -3,10 +3,7 @@ package ru.clevertec.newsManagement.model;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import ru.clevertec.newsManagement.util.LocalDateStringConvert;
 import ru.clevertec.newsManagement.util.StringLocalDateConvert;
 
@@ -17,6 +14,7 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode(of = {"username","time","text"})
 public class Comment {
 
     @Id
@@ -27,11 +25,13 @@ public class Comment {
     @JsonDeserialize(converter = StringLocalDateConvert.class)
     private LocalTime time;
 
+    private String text;
+
+    private String username;
+
+    @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     private News news;
-
-    private String text;
-    private String username;
 
     @PrePersist
     public void setCreateDate() {

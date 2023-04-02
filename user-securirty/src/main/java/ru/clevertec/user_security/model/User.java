@@ -1,10 +1,7 @@
-package com.example.eurekaclient.model;
+package ru.clevertec.user_security.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
+@EqualsAndHashCode(of = {"username"})
 public class User {
 
     @Id
@@ -23,6 +21,7 @@ public class User {
     private String username;
     private String password;
 
+    @ToString.Exclude
     @ManyToMany
     private List<Role> roles = new ArrayList<>();
 }

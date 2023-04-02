@@ -2,6 +2,7 @@ package ru.clevertec.newsManagement.servises.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +28,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Profile("prod")
 public class CommentServiceImpl extends AbstractService implements CommentService {
 
     private final CommentRepository repository;

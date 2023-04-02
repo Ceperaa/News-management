@@ -9,7 +9,7 @@ import ru.clevertec.newsManagement.model.User;
 
 import java.util.Optional;
 
-@FeignClient(value = "security",url = "http://springbootApp82:8002/")
+@FeignClient(value = "security",url = "${app.user_url:http://springbootApp82:8002/}")
 @Component
 public interface UserServiceFeign {
 

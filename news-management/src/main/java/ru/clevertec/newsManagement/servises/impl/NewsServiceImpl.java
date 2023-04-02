@@ -1,9 +1,8 @@
 package ru.clevertec.newsManagement.servises.impl;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -13,14 +12,12 @@ import ru.clevertec.newsManagement.cache.aop.annotations.PutCache;
 import ru.clevertec.newsManagement.cache.aop.annotations.RemoveCache;
 import ru.clevertec.newsManagement.exception.EntityNotFoundException;
 import ru.clevertec.newsManagement.mapper.NewsMapper;
-import ru.clevertec.newsManagement.model.Comment;
 import ru.clevertec.newsManagement.model.News;
 import ru.clevertec.newsManagement.model.dto.*;
 import ru.clevertec.newsManagement.repository.CustomerSpecifications;
 import ru.clevertec.newsManagement.repository.NewsRepository;
 import ru.clevertec.newsManagement.servises.NewsService;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +26,7 @@ import static ru.clevertec.newsManagement.model.Roles.ROLE_JOURNALIST;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Profile("prod")
 public class NewsServiceImpl extends AbstractService implements NewsService {
 
     private final NewsRepository repository;

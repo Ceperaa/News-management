@@ -55,7 +55,9 @@ public class LoggerAspect {
         if (result != null && result.getClass().isAssignableFrom(ResponseEntity.class)) {
             ResponseEntity proceed = (ResponseEntity) result;
             logMessage.setHttpStatus(proceed.getStatusCode().toString());
-            logMessage.setResponse(Optional.ofNullable(proceed.getBody().toString()).orElseGet(() -> ""));
+            logMessage.setResponse(Optional.ofNullable(proceed.getBody())
+                    .map(Object::toString)
+                    .orElseGet(() -> ""));
         } else {
             logMessage.setHttpStatus(HttpStatus.NO_CONTENT.toString());
         }
@@ -75,7 +77,7 @@ public class LoggerAspect {
         Object proceed = joinPoint.proceed();
         try {
             if (proceed != null) {
-                log.debug(String.format("%s - %s", simpleName, serviceMessage(joinPoint, proceed)));
+                log.debug("{} - {}", simpleName, serviceMessage(joinPoint, proceed));
                 return proceed;
             }
         } catch (Exception throwable) {

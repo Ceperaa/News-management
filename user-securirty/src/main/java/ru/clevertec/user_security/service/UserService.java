@@ -1,7 +1,7 @@
-package com.example.eurekaclient.service;
+package ru.clevertec.user_security.service;
 
-import com.example.eurekaclient.model.Role;
-import com.example.eurekaclient.model.User;
+import ru.clevertec.user_security.model.Role;
+import ru.clevertec.user_security.model.User;
 
 public interface UserService {
 

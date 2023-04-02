@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@EqualsAndHashCode(of = {"username","time","text","title"})
 public class News {
 
     @Id
@@ -26,13 +27,16 @@ public class News {
     @JsonDeserialize(converter = StringLocalDateConvert.class)
     private LocalTime time;
 
+    private String text;
+
+    private String title;
+
+    private String username;
+
     @ToString.Exclude
+    @Builder.Default
     @OneToMany(mappedBy = "news")
     private List<Comment> comments = new ArrayList<>();
-
-    private String text;
-    private String title;
-    private String username;
 
     @PrePersist
     public void setCreateDate() {

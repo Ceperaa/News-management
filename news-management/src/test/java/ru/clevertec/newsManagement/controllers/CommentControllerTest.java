@@ -21,15 +21,6 @@ class CommentControllerTest extends ControllerTest {
     private String jsonObject;
     private final String url = "http://localhost:9095/api/v1/comments/";
 
-    @Container
-    protected static final PostgreSQLContainer<?> CONTAINER = new PostgreSQLContainer<>("postgres:14.7");
-
-    @DynamicPropertySource
-    static void postgresProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", CONTAINER::getJdbcUrl);
-        registry.add("spring.datasource.password", CONTAINER::getPassword);
-        registry.add("spring.datasource.username", CONTAINER::getUsername);
-    }
 
     @BeforeEach
     void setUp() throws JsonProcessingException {
@@ -43,7 +34,6 @@ class CommentControllerTest extends ControllerTest {
         wireMockServer.stubFor(get(urlEqualTo("/api/v1/comments/"))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
-                        .withTransformerParameters(Map.of("page", "0", "size", "1"))
                         .withBody(jsonObject)
                         .withStatus(200)));
         ResponseEntity<CommentDto> response = restTemplate.getForEntity(url, CommentDto.class);

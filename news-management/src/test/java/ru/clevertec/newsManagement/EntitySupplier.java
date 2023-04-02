@@ -1,10 +1,12 @@
 package ru.clevertec.newsManagement;
 
-import ru.clevertec.newsManagement.model.Comment;
-import ru.clevertec.newsManagement.model.News;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import ru.clevertec.newsManagement.model.*;
 import ru.clevertec.newsManagement.model.dto.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class EntitySupplier {
 
@@ -70,6 +72,25 @@ public class EntitySupplier {
     }
 
     public static UserSecurity getUserSecurity() {
-        return new UserSecurity(1, "name", "name",new ArrayList<>());
+        return new UserSecurity(1, "name", "name", List.of(new SimpleGrantedAuthority("ROLE_ADMIN")));
+    }
+
+    public static UserAuthDto getUserAuthDto() {
+        return UserAuthDto.builder()
+                .username("username")
+                .password("password")
+                .build();
+    }
+
+    public static User getUser() {
+        return User.builder()
+                .id(1L)
+                .username("username")
+                .password(new BCryptPasswordEncoder().encode("password"))
+                .roles(List.of(getRole())).build();
+    }
+
+    public static Role getRole() {
+        return Role.builder().id(1L).role("ROLE_ADMIN").build();
     }
 }

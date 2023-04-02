@@ -1,4 +1,4 @@
-package com.example.eurekaclient;
+package ru.clevertec.user_security;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

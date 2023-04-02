@@ -1,4 +1,4 @@
-package com.example.eurekaclient.exception;
+package ru.clevertec.user_security.exception;
 
 public class EntityNotFoundException extends RuntimeException {
 

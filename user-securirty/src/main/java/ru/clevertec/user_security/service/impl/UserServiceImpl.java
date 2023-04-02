@@ -1,16 +1,18 @@
-package com.example.eurekaclient.service.impl;
+package ru.clevertec.user_security.service.impl;
 
-import com.example.eurekaclient.exception.EntityNotFoundException;
-import com.example.eurekaclient.model.Role;
-import com.example.eurekaclient.model.User;
-import com.example.eurekaclient.repositiry.RoleRepository;
-import com.example.eurekaclient.repositiry.UserRepository;
-import com.example.eurekaclient.service.UserService;
+import ru.clevertec.user_security.exception.EntityNotFoundException;
+import ru.clevertec.user_security.model.Role;
+import ru.clevertec.user_security.model.User;
+import ru.clevertec.user_security.repositiry.RoleRepository;
+import ru.clevertec.user_security.repositiry.UserRepository;
+import ru.clevertec.user_security.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Profile("prod")
 public class UserServiceImpl implements UserService {
 
     private final UserRepository repository;

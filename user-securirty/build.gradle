@@ -4,7 +4,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.1.0'
 }
 
-group = 'com.example'
+group = 'ru.clevertec'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
@@ -53,6 +53,10 @@ dependencyManagement {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jar {
+	enabled = false
 }
 
 //test {

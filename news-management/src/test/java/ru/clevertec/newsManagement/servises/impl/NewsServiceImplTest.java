@@ -41,7 +41,6 @@ class NewsServiceImplTest {
     private NewsUpdateDto newsUpdateDto;
     private UserSecurity userSecurity;
 
-
     @BeforeEach
     void setUp() {
         news = getNews();

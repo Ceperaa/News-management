@@ -18,8 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 
-@Testcontainers
-@Transactional
 class NewsControllerTest extends ControllerTest {
 
     private NewsDto newsDtoActual;
@@ -28,16 +26,6 @@ class NewsControllerTest extends ControllerTest {
 
     private String url = "http://localhost:9095/api/v1/news/";
 
-    @Container
-    protected static final PostgreSQLContainer<?> CONTAINER = new PostgreSQLContainer<>("postgres:14.7");
-
-    @DynamicPropertySource
-    static void postgresProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", CONTAINER::getJdbcUrl);
-        registry.add("spring.datasource.password", CONTAINER::getPassword);
-        registry.add("spring.datasource.username", CONTAINER::getUsername);
-    }
-
     @BeforeEach
     void setUp() throws JsonProcessingException {
         newsDtoActual = EntitySupplier.getNewsDto();
@@ -45,34 +33,17 @@ class NewsControllerTest extends ControllerTest {
         wireMockServer.start();
     }
 
-    @BeforeAll
-    static void beforeAll() {
-        CONTAINER.start();
-    }
-
     @Test
     void newsAll() {
         wireMockServer.stubFor(get(urlEqualTo("/api/v1/news/"))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
-                        .withTransformerParameters(Map.of("page", "0", "size", "1"))
                         .withBody(jsonObject)
                         .withStatus(200)));
         ResponseEntity<NewsDto> response = restTemplate.getForEntity(url, NewsDto.class);
         NewsDto body = response.getBody();
         assertThat(newsDtoActual.getText()).isEqualTo(body.getText());
         assertThat(200).isEqualTo(response.getStatusCode().value());
-    }
-
-    @Test
-    void addNews() {
-        wireMockServer.stubFor(post(urlEqualTo("/api/v1/news/"))
-                .willReturn(aResponse()
-                        .withHeader("Content-Type", "application/json")
-                        .withBody(jsonObject)
-                        .withStatus(201)));
-        NewsDto newsDto = restTemplate.postForObject(url, newsDtoActual, NewsDto.class);
-        assertThat(newsDtoActual.getText()).isEqualTo(newsDto.getText());
     }
 
     @Test

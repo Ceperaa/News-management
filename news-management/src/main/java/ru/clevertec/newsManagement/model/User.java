@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "users")
+@EqualsAndHashCode(of = {"username"})
 public class User {
 
     @Id
@@ -20,6 +21,8 @@ public class User {
     private String username;
     private String password;
 
+    @ToString.Exclude
+    @Builder.Default
     @ManyToMany
     private List<Role> roles = new ArrayList<>();
 }

@@ -1,6 +1,6 @@
-package com.example.eurekaclient.repositiry;
+package ru.clevertec.user_security.repositiry;
 
-import com.example.eurekaclient.model.User;
+import ru.clevertec.user_security.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

@@ -1,0 +1,9 @@
+databaseChangeLog:
+
+  - include:
+      file: DDL.sql
+      relativeToChangelogFile: true
+
+  - include:
+      file: DML-test.sql
+      relativeToChangelogFile: true

@@ -1,18 +1,13 @@
-package com.example.eurekaclient.controllers;
+package ru.clevertec.user_security.controllers;
 
-import com.example.eurekaclient.model.Role;
-import com.example.eurekaclient.model.User;
-import com.example.eurekaclient.repositiry.RoleRepository;
-import com.example.eurekaclient.repositiry.UserRepository;
+import ru.clevertec.user_security.model.Role;
+import ru.clevertec.user_security.model.User;
 
-import com.example.eurekaclient.service.UserService;
+import ru.clevertec.user_security.service.UserService;
 import feign.Param;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")

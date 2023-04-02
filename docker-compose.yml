@@ -44,7 +44,6 @@ services:
     networks:
       - app-network
 
-
   ##2
   springbootApp82:
     container_name: user_security
