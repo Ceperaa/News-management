@@ -18,6 +18,9 @@ spring:
           show_sql: false
           format_sql: true
 
+  profiles:
+    active: prod
+
   cloud:
     config:
       enabled: false

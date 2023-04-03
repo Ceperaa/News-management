@@ -69,7 +69,7 @@ public class PotentialDependencyHandler {
      * @param dataObject данные точки соединения
      */
     private void observer(DataObject dataObject) {
-        if (!dataObject.getFieldName().equals("")) {
+        if (dataObject.getDependentEntity() != null) {
             Map fieldMap = objectMapper.convertValue(dataObject.getDependentEntity(), Map.class);
             String keyTargetEntity = getKey(String.valueOf(fieldMap.get(dataObject.getFieldName())),
                     dataObject.getTypeEntity().getSimpleName());
